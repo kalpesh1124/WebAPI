@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <style>
+        .tbl th {
+           border:solid 2px;
+           padding:5px;
+        }
+        .tbl td {
+            border: solid 2px;
+            padding: 5px;
+        }
+        
+    </style>
+    <script>
+        Qualification = []
+        $(document).ready(function () {
+            Display();
+            $('#btn').click(function () {
+                Add();
+            })
+            $('#btnupdate').click(function () {
+                Update();
+            })
+            $('#btndelete').click(function () {
+                var sid = $("#txtid").val();
+                DeleteEmp(sid);
+            })
+        })
+        function Display() {
+            $.ajax({
+                url: 'https://localhost:44370/api/Employee',
+                method: 'get',
+                contentType: 'application/json',
+                success: function (resp) {
+                    console.log(resp)
+                    $('#tbldata').empty();
+                    $.each(resp, function (i, d) {
+                        $('#tbldata').append("<tr><td>" + d.id + "</td><td>" + d.name + "</td><td>" +
+                            d.designation + "</td><td>" + d.salary + "</td><td><input type='button' value='View' onclick='ViewEmp(" + d.id + ")'>"
+                            + "<input type='button' style='margin-left:10px' value='X' onclick='DeleteEmp(" + d.id + ")'/></td></tr>");
+
+                    })
+                }
+            })
+
+        }
+        function Add() {
+            var sid = $("#txtid").val();
+            var sname = $("#txtname").val();
+            var sdesi = $("#txtdesi").val();
+            var ssalary = $("#txtsalary").val();
+            var st = { "id": sid, "name": sname, "designation": sdesi, "salary": ssalary };
+            $.ajax({
+
+                url: '/api/AddEmployee',
+                method: 'post',
+                data: JSON.stringify(st),
+                contentType: 'application/json',
+                success: function (resp) {
+                    alert(resp)
+                    $("#txtid").val("");
+                    $("#txtname").val("");
+                    $("#txtdesi").val("");
+                    $("#txtsalary").val("");
+                    Display();
+                    
+                    
+                }
+
+
+            })
+
+        }
+        function ViewEmp(r) {
+
+            $.ajax({
+                url: '/api/GetEmp/' + r,
+                method: 'get',
+                contentType: 'application/json',
+                success: function (resp) {
+                    $("#txtid").val(resp.id);
+                    $("#txtname").val(resp.name);
+                    $("#txtdesi").val(resp.designation);
+                    $("#txtsalary").val(resp.salary);
+                }
+
+            })
+        }
+        function DeleteEmp(d) {
+            var i = $('#txtid').val();
+            $.ajax({
+                url: '/api/DeleteEmp/' + d,
+                method: 'get',
+                contentType: 'application/json',
+                success: function (resp) {
+                    alert(resp);
+                    Display();
+                }
+
+            })
+        }
+        function Update() {
+            var sid = $("#txtid").val();
+            var sname = $("#txtname").val();
+            var sdesi = $("#txtdesi").val();
+            var ssalary = $("#txtsalary").val();
+            var st = { "id": sid, "name": sname, "designation": sdesi, "salary": ssalary };
+            $.ajax({
+
+                url: '/api/UpdateEmp',
+                method: 'post',
+                data: JSON.stringify(st),
+                contentType: 'application/json',
+                success: function (resp) {
+                    alert(resp)
+                    $("#txtid").val("");
+                    $("#txtname").val("");
+                    $("#txtdesi").val("");
+                    $("#txtsalary").val("");
+                    Display();
+
+                }
+
+
+            })
+        }
+    </script>
+</head>
+<body>
+    <div style="margin-top:20px">
+        <table>
+            <tr>
+                <td>
+                    Employee Id
+                </td>
+                <td>
+                    <input type="text" id="txtid" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Employee Name
+                </td>
+                <td>
+                    <input type="text" id="txtname" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Employee Designation
+                </td>
+                <td>
+                    <input type="text" id="txtdesi" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Employee Salary
+                </td>
+                <td>
+                    <input type="text" id="txtsalary" />
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="padding-top:5px">
+                    <input type="submit" id="btn" value="Add" />
+                    <input style="margin-left:5px" type="submit" id="btnupdate" value="Update" />
+                    <input style="margin-left:5px" type="submit" id="btndelete" value="Delete"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="margin-top:50px">
+        <table style="border:solid 2px" class="tbl">
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Employee Name</th>
+                    <th>Employee Desigantion</th>
+                    <th>Employee Salary</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="tbldata">
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
