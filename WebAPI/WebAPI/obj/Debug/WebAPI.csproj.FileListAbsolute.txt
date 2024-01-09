@@ -166,6 +166,7 @@ C:\Users\Kalpesh\Desktop\WebAPI\WebAPI\WebAPI\bin\System.Web.Http.WebHost.xml
 C:\Users\Kalpesh\Desktop\WebAPI\WebAPI\WebAPI\bin\System.Web.Mvc.xml
 C:\Users\Kalpesh\Desktop\WebAPI\WebAPI\WebAPI\bin\System.Web.Optimization.xml
 C:\Users\Kalpesh\Desktop\WebAPI\WebAPI\WebAPI\bin\System.Web.Razor.xml
+C:\Users\Kalpesh\Desktop\WebAPI\WebAPI\WebAPI\bin\System.Web.WebPages.xml
 C:\Users\Kalpesh\Desktop\WebAPI\WebAPI\WebAPI\bin\System.Web.WebPages.Deployment.xml
 C:\Users\Kalpesh\Desktop\WebAPI\WebAPI\WebAPI\bin\System.Web.WebPages.Razor.xml
 C:\Users\Kalpesh\Desktop\WebAPI\WebAPI\WebAPI\bin\Antlr3.Runtime.pdb
