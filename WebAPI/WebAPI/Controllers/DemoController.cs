@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
         //{
         //    return "Square = " + (id * id);
         //}
-
+        
         [HttpGet] // database value get method
         [Route("api/Employee")]
         public List<Emp> GetEmployee()
